@@ -2,4 +2,16 @@
 
 <p><%= link_to "Edit Link", edit_link_path %></p>
 
+<% if @link.comments.any? %>
+  <h4>Comments for this link:</h4>
+  <table>
+    <tr>
+    <th>Name</th><th>Message</th><th>link_id</th>
+  </tr>
+  <% @link.comments.each do |comment| %>
+      <tr><td><%= comment.name %></td><td><%= comment.message %></td><td><%= comment.link_id %></td></tr>
+      <% end %>
+    </table>
+    <% end %>
+
 <p><%= link_to "Return to links", links_path %></p>
