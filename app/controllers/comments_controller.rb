@@ -13,16 +13,15 @@ class CommentsController < ApplicationController
 
   def new
     @link = Link.find(params[:link_id])
-    @comment = Comment.new
+    @comment = @link.comments.new
     render :new
   end
 
   def create
     @link = Link.find(params[:link_id])
-    @comment = Comment.new(comments_params)
+    @comment = @link.comments.new(comments_params)
     if @comment.save
-      flash[:notice] = "Comment successfully added!"
-      redirect_to comments_path
+      redirect_to link_path(@comment.link)
     else
       render :new
     end
@@ -31,6 +30,7 @@ class CommentsController < ApplicationController
   def edit
     @link = Link.find(params[:link_id])
     @comment = Comment.find(params[:id])
+      render :edit
   end
 
   def update
@@ -45,7 +45,6 @@ class CommentsController < ApplicationController
 
   def destroy
     @link = Link.find(params[:link_id])
-
     @comment = Comment.find(params[:id])
     @comment.destroy
     redirect_to link_path(@comment.link)
